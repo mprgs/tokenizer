@@ -94,7 +94,7 @@ ASCII_ARROWS = r"""[\-]+>|<[\-]+"""
 WORDS = r"""
     (?:[^\W\d_](?:[^\W\d_]|['\-_])+[^\W\d_]) # Words with apostrophes or dashes.
     |
-    (?:[+\-]?\d+[,/.:-]\d+[+\-]?)  # Numbers, including fractions, decimals.
+    (?:[+\-]?\d+(?:[,/.:-]\d+)*[+\-]?)  # Numbers, including fractions, decimals.
     |
     (?:[\w_]+)                     # Words without apostrophes or dashes.
     |
