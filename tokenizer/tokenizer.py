@@ -102,7 +102,7 @@ REDDIT_USER_RE = re.compile(REDDIT_USER, flags=re.UNICODE)
 HASHTAG_RE = re.compile(HASHTAG, re.UNICODE)
 HASH_RE = re.compile(r'#(?=\w+)', re.UNICODE)
 
-ELLIPSES_RE = re.compile(ELLIPSES, re.UNICODE)
+ELLIPSIS_RE = re.compile(ELLIPSIS, re.UNICODE)
 
 #my url version, nltk's doesn't work for separate regexp
 URL_RE = re.compile(r"""((https?:\/\/|www)|\w+\.(\w{2-3}))([\w\!#$&-;=\?\-\[\]~]|%[0-9a-fA-F]{2})+""", re.UNICODE)
