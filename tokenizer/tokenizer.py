@@ -82,7 +82,7 @@ ASCII_ARROWS = r"""[\-]+>|<[\-]+"""
 #long non-word, non-numeric repeats
 #HANGS = r"""([^a-zA-Z0-9])\1{3,}"""
 
-NUMBERS = r"""(?:\b\d[+\-,\/.:-0-9]*\b)"""  # Numbers, including fractions, decimals. Purely numbers only.
+NUMBERS = r"""(?:\b\d[+\-,\/.:0-9]*\b)"""  # Numbers, including fractions, decimals. Purely numbers only.
 
 ELLIPSIS = r"""(?:\.(?:\s*\.){1,})"""            # Ellipsis dots.
 
