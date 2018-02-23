@@ -82,7 +82,7 @@ ASCII_ARROWS = r"""[\-]+>|<[\-]+"""
 #long non-word, non-numeric repeats
 #HANGS = r"""([^a-zA-Z0-9])\1{3,}"""
 
-NUMBERS = r"""(?:[+\-]?\d+(?:[,/.:-]\d+)*[+\-]?)"""  # Numbers, including fractions, decimals.
+NUMBERS = r"""(?:[+\-]?\d+(?:[,/.:-]\d+)*[+\-]?[^a-zA-Z])"""  # Numbers, including fractions, decimals. Purely numbers only.
 
 ELLIPSIS = r"""(?:\.(?:\s*\.){1,})"""            # Ellipsis dots.
 
@@ -101,7 +101,7 @@ TWITTER_USER_RE = re.compile(TWITTER_USER, re.UNICODE)
 REDDIT_USER_RE = re.compile(REDDIT_USER, flags=re.UNICODE)
 HASHTAG_RE = re.compile(HASHTAG, re.UNICODE)
 HASH_RE = re.compile(r'#(?=\w+)', re.UNICODE)
-
+NUMBERS_RE = re.compile(NUMBERS, re.UNICODE)
 ELLIPSIS_RE = re.compile(ELLIPSIS, re.UNICODE)
 
 #my url version, nltk's doesn't work for separate regexp
