@@ -186,7 +186,7 @@ class TweetTokenizer():
 
 class RedditTokenizer():
 
-    def __init__(self, preserve_case=True, preserve_handles=True, preserve_hashes=True, regularize=False, preserve_len=True, preserve_emoji=True, preserve_url=True, preserve_ellipsis = False, preserve_aposS=False):
+    def __init__(self, preserve_case=True, preserve_handles=True, preserve_hashes=True, regularize=False, preserve_len=True, preserve_emoji=True, preserve_url=True, preserve_ellipsis = False, preserve_aposS=False, preserve_numbers=True):
 
         self.preserve_case = preserve_case
         self.preserve_handles = preserve_handles
@@ -199,6 +199,7 @@ class RedditTokenizer():
         self.preserve_emoji = preserve_emoji
         self.preserve_url = preserve_url
         self.preserve_ellipsis = preserve_ellipsis
+        self.preserve_numbers = preserve_numbers
         self.preserve_aposS = preserve_aposS
         self.WORD_RE = re.compile(r"""(%s)""" % "|".join(REDDIT_REGEXPS), re.VERBOSE | re.I | re.UNICODE)
 
@@ -225,6 +226,8 @@ class RedditTokenizer():
             text = re.sub(URL_RE, ' ', text)
         if not self.preserve_ellipsis:
             text = re.sub(ELLIPSIS_RE, ' ', text)
+        if not self.preserve_numbers:
+            text = re.sub(NUMBERS_RE, ' ', text)
         if not self.preserve_aposS:
             text = re.sub(r"""'[sS]\b""", '', text)
 
