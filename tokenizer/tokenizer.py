@@ -187,7 +187,7 @@ class RedditTokenizer():
         self.preserve_hashes = preserve_hashes
         self.regularize = regularize
         if self.regularize:
-            self.R = reg.Regularizer()
+            self.R = Regularizer()
 
         self.preserve_len = preserve_len
         self.preserve_emoji = preserve_emoji
