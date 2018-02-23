@@ -69,15 +69,6 @@ TWITTER_USER = r"""(?:@\w+)"""
 REDDIT_USER = r"(?:\/?u\/\w+)"
 REDDIT_SUBREDDIT = r"(?:\/?r\/\w+)"
 
-#separately compiled regexps
-TWITTER_USER_RE = re.compile(TWITTER_USER, re.UNICODE)
-REDDIT_USER_RE = re.compile(REDDIT_USER, flags=re.UNICODE)
-HASHTAG_RE = re.compile(HASHTAG, re.UNICODE)
-HASH_RE = re.compile(r'#(?=\w+)', re.UNICODE)
-#my url version, nltk's doesn't work for separate regexp
-URL_RE = re.compile(r"""((https?:\/\/|www)|\w+\.(\w{2-3}))([\w\!#$&-;=\?\-\[\]~]|%[0-9a-fA-F]{2})+""", re.UNICODE)
-EMOTICON_RE = re.compile(r"""(%s)""" % "|".join(EMOTICONS), re.UNICODE)
-
 # more regular expressions for word compilation, borrowed from nltk
 #phone numbers
 PHONE = r"""(?:(?:\+?[01][\-\s.]*)?(?:[\(]?\d{3}[\-\s.\)]*)?\d{3}[\-\s.]*\d{4})"""
@@ -103,6 +94,20 @@ WORDS = r"""
     |
     (?:\S)                         # Everything else that isn't whitespace.
     """
+
+
+#separately compiled regexps
+TWITTER_USER_RE = re.compile(TWITTER_USER, re.UNICODE)
+REDDIT_USER_RE = re.compile(REDDIT_USER, flags=re.UNICODE)
+HASHTAG_RE = re.compile(HASHTAG, re.UNICODE)
+HASH_RE = re.compile(r'#(?=\w+)', re.UNICODE)
+
+ELLIPSES_RE = re.compile(ELLIPSES, re.UNICODE)
+
+#my url version, nltk's doesn't work for separate regexp
+URL_RE = re.compile(r"""((https?:\/\/|www)|\w+\.(\w{2-3}))([\w\!#$&-;=\?\-\[\]~]|%[0-9a-fA-F]{2})+""", re.UNICODE)
+EMOTICON_RE = re.compile(r"""(%s)""" % "|".join(EMOTICONS), re.UNICODE)
+
 TWITTER_REGEXPS = [URLS, PHONE] + EMOTICONS + [HTML_TAGS, ASCII_ARROWS, TWITTER_USER, HASHTAG, EMAILS, NUMBERS, ELLIPSIS, WORDS]
 
 REDDIT_REGEXPS = [URLS, PHONE] + EMOTICONS + [HTML_TAGS, ASCII_ARROWS, REDDIT_USER, REDDIT_SUBREDDIT, HASHTAG, EMAILS, NUMBERS, ELLIPSIS, WORDS]
@@ -181,7 +186,7 @@ class TweetTokenizer():
 
 class RedditTokenizer():
 
-    def __init__(self, preserve_case=True, preserve_handles=True, preserve_hashes=True, regularize=False, preserve_len=True, preserve_emoji=True, preserve_url=True):
+    def __init__(self, preserve_case=True, preserve_handles=True, preserve_hashes=True, regularize=False, preserve_len=True, preserve_emoji=True, preserve_url=True, preserve_ellipsis = False):
 
         self.preserve_case = preserve_case
         self.preserve_handles = preserve_handles
@@ -193,6 +198,7 @@ class RedditTokenizer():
         self.preserve_len = preserve_len
         self.preserve_emoji = preserve_emoji
         self.preserve_url = preserve_url
+        self.preserve_ellipsis = preserve_ellipsis
         self.WORD_RE = re.compile(r"""(%s)""" % "|".join(REDDIT_REGEXPS), re.VERBOSE | re.I | re.UNICODE)
 
     def strip_emoji(self, text):
@@ -216,6 +222,8 @@ class RedditTokenizer():
             text = re.sub(HASH_RE, '', text)
         if not self.preserve_url:
             text = re.sub(URL_RE, ' ', text)
+        if not self.preserve_ellipsis:
+            text = re.sub(ELLIPSIS_RE, ' ', text)
         if not self.preserve_len:
             text = reduce_lengthening(text)
         if self.regularize:
