@@ -90,21 +90,22 @@ HTML_TAGS = r"""<[^>\s]+>"""
 ASCII_ARROWS = r"""[\-]+>|<[\-]+"""
 #long non-word, non-numeric repeats
 #HANGS = r"""([^a-zA-Z0-9])\1{3,}"""
+
+NUMBERS = r"""(?:[+\-]?\d+(?:[,/.:-]\d+)*[+\-]?)"""  # Numbers, including fractions, decimals.
+
+ELLIPSIS = r"""(?:\.(?:\s*\.){1,})"""            # Ellipsis dots.
+
 # Remaining word types:
 WORDS = r"""
     (?:[^\W\d_](?:[^\W\d_]|['\-_])+[^\W\d_]) # Words with apostrophes or dashes.
     |
-    (?:[+\-]?\d+(?:[,/.:-]\d+)*[+\-]?)  # Numbers, including fractions, decimals.
-    |
     (?:[\w_]+)                     # Words without apostrophes or dashes.
-    |
-    (?:\.(?:\s*\.){1,})            # Ellipsis dots.
     |
     (?:\S)                         # Everything else that isn't whitespace.
     """
-TWITTER_REGEXPS = [URLS, PHONE] + EMOTICONS + [HTML_TAGS, ASCII_ARROWS, TWITTER_USER, HASHTAG, EMAILS, WORDS]
+TWITTER_REGEXPS = [URLS, PHONE] + EMOTICONS + [HTML_TAGS, ASCII_ARROWS, TWITTER_USER, HASHTAG, EMAILS, NUMBERS, ELLIPSIS, WORDS]
 
-REDDIT_REGEXPS = [URLS, PHONE] + EMOTICONS + [HTML_TAGS, ASCII_ARROWS, REDDIT_USER, REDDIT_SUBREDDIT, HASHTAG, EMAILS, WORDS]
+REDDIT_REGEXPS = [URLS, PHONE] + EMOTICONS + [HTML_TAGS, ASCII_ARROWS, REDDIT_USER, REDDIT_SUBREDDIT, HASHTAG, EMAILS, NUMBERS, ELLIPSIS, WORDS]
 
 class TweetTokenizer():
 
